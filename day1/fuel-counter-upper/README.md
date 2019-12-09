@@ -1,36 +1,15 @@
 # fuel-counter-upper
 
-FIXME: description
-
-## Installation
-
-Download from http://example.com/FIXME.
+Day 1 of Advent of Code 2019:
+https://adventofcode.com/2019/day/1
 
 ## Usage
 
-FIXME: explanation
-
     $ java -jar fuel-counter-upper-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright © 2019 Einar Rune Haugnes
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
