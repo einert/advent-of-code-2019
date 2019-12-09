@@ -3,19 +3,14 @@
 
 (require '[clojure.java.io :as io])
 
-(defn process-file-with [line-func line-acc filename]
+(defn process-file [filename]
   (with-open [rdr (io/reader (io/file filename))]
-    (reduce line-func line-acc 
-            (map #(- (quot % 3) 2) 
-                 (map read-string 
-                      (line-seq rdr))))))
-
-;;(require '[clojure.string :as string])
-
-(defn accumulate [acc fuel]
-  (+ acc fuel))
+    (->> (line-seq rdr)
+         (map read-string)
+         (map #(- (quot % 3) 2))
+         (reduce +))))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "On the first day, do the thing with the fuel"
   [& args]
-  (prn process-file-with accumulate 0 "input"))
+  (prn process-file "input"))
