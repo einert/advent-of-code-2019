@@ -13,4 +13,4 @@
 (defn -main
   "On the first day, do the thing with the fuel"
   [& args]
-  (prn process-file "input"))
+  (prn (process-file "input")))
