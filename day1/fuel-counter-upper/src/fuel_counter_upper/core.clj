@@ -3,11 +3,18 @@
 
 (require '[clojure.java.io :as io])
 
+(defn total-fuel [module-weight]
+  (loop [weight module-weight fuel 0]
+    (let [delta (- (quot weight 3) 2)]
+      (if (<= delta 0)
+        fuel
+        (recur delta (+ fuel delta))))))
+
 (defn process-file [filename]
   (with-open [rdr (io/reader (io/file filename))]
     (->> (line-seq rdr)
          (map read-string)
-         (map #(- (quot % 3) 2))
+         (map total-fuel)
          (reduce +))))
 
 (defn -main
