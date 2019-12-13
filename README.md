@@ -1,8 +1,8 @@
 # Advent of Code 2019
 
 Doing assignments from Advent of Code 2019 and trying to learn Clojure at the same time, yay!
-https://adventofcode.com/2019
-https://clojure.org
+* https://adventofcode.com/2019
+* https://clojure.org
 
 ## Usage
 
