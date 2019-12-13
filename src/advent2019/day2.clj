@@ -5,8 +5,7 @@
 ;; Solution from elatedpixel was a real eye-opener
 ;; Borrowed/copied shamelessly from him to play with the
 ;; code and find out how it works.
-;; Simplified away the map, which I don't yet
-;; see the use for (but day 2 is not over yet...)
+;; Simplified away the map, which seems like overkill.
 
 (def input 
   (->> "day2.txt"
@@ -45,7 +44,7 @@
 
 (defn part2
   []
-  (some #(if (= 19690720 (second %)) (first %) )
+  (some #(when (= 19690720 (second %)) (first %))
          (pmap (fn [[a b]]
                  [(+ b (* 100 a))
                   (first (computer (-> input
