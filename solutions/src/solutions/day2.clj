@@ -42,3 +42,13 @@
   (computer (-> input
                 (assoc 1 12)
                 (assoc 2 2))))
+
+(defn part2
+  []
+  (some #(if (= 19690720 (second %)) (first %) )
+         (pmap (fn [[a b]]
+                 [(+ b (* 100 a))
+                  (first (computer (-> input
+                                       (assoc 1 a)
+                                       (assoc 2 b))))])
+               (for [a (range 100) b (range 100)] [a b]))))
