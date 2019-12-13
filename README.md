@@ -1,11 +1,12 @@
-# fuel-counter-upper
+# Advent of Code 2019
 
-Day 1 of Advent of Code 2019:
-https://adventofcode.com/2019/day/1
+Doing assignments from Advent of Code 2019 and trying to learn Clojure at the same time, yay!
+https://adventofcode.com/2019
+https://clojure.org
 
 ## Usage
 
-    $ java -jar fuel-counter-upper-0.1.0-standalone.jar [args]
+Use "lein run" or run through the REPL. Varying attention to jar packaging.
 
 ## License
 
