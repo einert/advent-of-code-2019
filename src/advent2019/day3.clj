@@ -1,49 +1,47 @@
 (ns advent2019.day3
-  (:require [clojure.test :as t]
-            [clojure.java.io :as io]))
+  (:require
+   [clojure.string :as str]
+   [clojure.set :as hset]))
 
-(t/with-test
-  
-  (defn manhattan-distance
-    ([[x y]] (manhattan-distance [x y] [0 0]))
-    ([[x y] [x0 y0]] (+ (Math/abs (- x x0)) 
-                        (Math/abs (- y y0)))))
-  
-  (t/is (= 1 (manhattan-distance [1 0])))
-  (t/is (= 1 (manhattan-distance [-1 0])))
-  (t/is (= 2 (manhattan-distance [1 -1])))
-  (t/is (= 30 (manhattan-distance [10 20])))
-  )
+;; again, fdside provides the inspiration and basis for the coe
 
-;; For red and blue wires, convert turtle specs to sorted 
-;; collections of *horizontal* and *vertical* line segments.
-;; red-wire { :horizontal <sorted-map {level [from to]}> :vertical <sorted-map {level [from to]}>
-(t/with-test
-  
-  (defn segment
-    ([path] (segment path [0 0]))
-    ([path [x y]]
-     (case (path :direction)
-       :R {:orientation :horizontal
-           :position y 
-           :range [x (+ x (path :distance))]}
-       :L {:orientation :horizontal
-           :position y
-           :range [(- x (path :distance)) x]}
-       :U {:orientation :vertical
-           :position x
-           :range [y (+ y (path :distance))]}
-       :D {:orientation :vertical
-           :position y
-           :range [(- y (path :distance)) y]})))
-  )
+(def input
+  (->> (slurp "resources/day3.txt")
+       str/split-lines
+       (map #(str/split % #","))))
 
-(defn path->lineset 
-  [path]
-  (map segment path))
+(defn calc-wire-points [[x y] dir dist]
+  (case dir
+    \R (for [xm (take dist (iterate inc (inc x)))] [xm y])
+    \L (for [xm (take dist (iterate dec (dec x)))] [xm y])
+    \U (for [ym (take dist (iterate inc (inc y)))] [x ym])
+    \D (for [ym (take dist (iterate dec (dec y)))] [x ym])))
 
-;; interesections (X,Y) are given by looking up intersections between 
-;; * red horizontals and blue verticals
-;; * blue horizontals and red verticals
+(defn extend-wire [locations [dir & dist]]
+  (concat locations 
+          (calc-wire-points
+           (last locations)
+           dir
+           (read-string (apply str dist)))))
 
-;; map intersections through manhattan distance, get the smallest one
+(defn create-wire [inp]
+  (reduce extend-wire [[0 0]] inp))
+
+(def wire1 (create-wire (first input)))
+(def wire2 (create-wire (second input)))
+(def intersections (hset/intersection (set wire1) (set wire2)))
+
+(defn abs [n] (max n (- n)))
+
+(defn closest-intersection []
+  (->> intersections
+       (map #(map abs %))
+       (map #(reduce + %))
+       sort
+       second)) ; origo doesn't count
+
+(defn shortest-intersection []
+  (->> intersections
+       (map #(+ (.indexOf wire1 %) (.indexOf wire2 %)))
+       sort
+       second))
